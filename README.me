@@ -1,0 +1,49 @@
+# SMS Spam Detection using LSTM
+
+This project was done as part of a deep learning challenge focused on SMS spam detection.  
+The objective was to build a model that can classify a given SMS message as either spam or ham (legitimate message).
+
+The dataset contains 5,572 SMS messages. Around 87% of them are ham and 13% are spam, so the data is clearly imbalanced. Because of this imbalance, I handled it carefully during training instead of relying only on accuracy.
+
+## What I Did
+
+The overall flow of the project is simple:
+
+First, I cleaned the text data by removing URLs, numbers, and special characters. Everything was converted to lowercase so that words like “Free” and “free” are treated the same.
+
+Then I built a vocabulary from the training data and converted each message into a sequence of numbers. Since neural networks require fixed-length input, I padded the sequences to a fixed size.
+
+For the model, I used a Bidirectional LSTM. The embedding layer converts words into dense vectors, and the BiLSTM helps capture context from both directions in the sentence. I also added a dropout layer to reduce overfitting.
+
+Because the dataset is imbalanced, I used class-weighted BCEWithLogitsLoss so that spam messages contribute more to the loss during training. This helps improve spam recall.
+
+I also implemented early stopping based on validation loss to prevent overfitting.
+
+
+## Model Results
+
+![Confusion Matrix](assets/image.png)
+
+## Model Architecture (Brief)
+
+- Embedding Layer  
+- Bidirectional LSTM  
+- Dropout  
+- Fully Connected Layer  
+- BCEWithLogitsLoss  
+
+## Evaluation
+
+Instead of focusing only on accuracy, I evaluated the model using:
+
+-Precision  
+-Recall  
+-F1-score  
+-Confusion Matrix  
+
+Since this is a spam detection task, recall and F1-score for the spam class were especially important.
+
+On the test set, the model achieved around:
+
+~98% F1-score for spam  
+ Very high recall with very few false negatives
